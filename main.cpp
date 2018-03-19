@@ -13,6 +13,7 @@ class Index{
 public:
         void mainPage();
         void welcome(char *text);
+        hi shreya
 
 };
 
