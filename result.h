@@ -58,4 +58,59 @@ fin.close();
 cout<<"PRESS ANY KEY TO RETURN TO THE MAIN MENU";
  getch(); main();
 }
+
+void assign_rank(){
+int big, pos, temp;
+Students t_app_obj;
+fstream t_app_file;
+t_app_file.open(app_file_name, ios::in|ios::out|ios::binary);
+int i=0;
+int marks_array[100];
+while(t_app_file.read((char*)&t_app_obj, sizeof(t_app_obj)))
+{
+marks_array[i]=t_app_obj.get_marks();
+i++;
+}
+calc_no_of_applicants();
+for(i=0;i<no_of_applicants;i++)
+{
+big = marks_array[i];
+pos=i;
+	for(int j=i+1;j<no_of_applicants;j++)
+	    {
+		 if(marks_array[j]>big)
+			{ big = marks_array[j];
+			  pos=j;
+			}
+	    }
+	    if(i!=pos)
+	    { temp = marks_array[i];
+	      marks_array[i] = marks_array[pos];
+	      marks_array[pos] = temp;
+	    }
+}
+t_app_file.clear();
+t_app_file.seekg(0);
+while (!t_app_file.eof()) {
+pos3=t_app_file.tellg();
+t_app_file.read((char*)&t_app_obj, sizeof(t_app_obj));
+for(i = no_of_applicants; i>-1;i--)
+{
+  if(t_app_obj.get_marks()==-500)
+  {
+     t_app_obj.set_rank(-1);
+     break;
+  }
+   else if(t_app_obj.get_marks()==marks_array[i])
+   {
+     t_app_obj.set_rank(i+1);
+     break;
+   }
+}
+t_app_file.seekg(pos3);
+t_app_file.write((char*)&t_app_obj, sizeof(t_app_obj));
+}
+t_app_file.close();
+}
+
 #endif // result
