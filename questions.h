@@ -52,4 +52,34 @@ void get_short_opt4(){  if(strlen(opt4)<10)
     cout.write(opt4,10);
    }
 };
+
+class State{
+int max_marks;
+int negative_mark;
+int positive_mark;
+int no_of_ques_to_ask;
+char password[30];
+char app_file_name[30];
+char ques_file_name[30];
+public:
+int get_negative_mark(){ return negative_mark; }
+int get_positive_mark(){ return positive_mark; }
+int get_no_of_ques_to_ask(){ return no_of_ques_to_ask; }
+char* get_password(){ return password; }
+char* get_app_file_name(){ return app_file_name; }
+char* get_ques_file_name(){ return ques_file_name; }
+void set_negative_mark(int nm){  negative_mark=nm;}
+void set_positive_mark(int pm){  positive_mark=pm;}
+void set_no_of_ques_to_ask(int nq){ no_of_ques_to_ask=nq;}
+void set_password(char pw[]){ strcpy(password, pw); }
+void set_app_file_name(char af[]){ strcpy(app_file_name, af); }
+void set_ques_file_name(char qf[]){ strcpy(ques_file_name, qf); }
+};
+//***************************************************************
+//    	FUNCTION TO CALCULATE NUMBER OF QUESTIONS IN THE FILE
+//***************************************************************
+void calc_no_of_questions(){
+
+    //Define the function
+}
 #endif // questions
