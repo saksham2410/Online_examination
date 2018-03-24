@@ -49,6 +49,75 @@ void get_short_faname(){
         cout.write(last_name,15);
        }
 };
+
+
+// Function to register new candidate
+
+void apply_now() {
+Applicants t_applicant;
+ofstream fout;
+ t_applicant.set_marks(-500);
+ t_applicant.set_rank(-1);
+
+fout.open(app_file_name, ios::app|ios::binary);
+cout<<"********************************************************************************"<<endl;
+cout<<"                              ::APPLICATION FORM::                              "<<endl;
+cout<<"********************************************************************************"<<endl;
+cout<<"NAME:";
+gets(na);
+t_applicant.set_name(na);
+cout<<"FIRST NAME:";
+gets(fa);
+t_applicant.set_faname(fa);
+cout<<"LAST NAME:";
+gets(ma);
+t_applicant.set_maname(ma);
+cout<<"DATE OF BIRTH"<<endl;
+do{
+cout<<"DAY (e.g., 1, 2, 3, 4, ....30, 31 )"<<endl;
+cin>>dd;
+ }
+while(!((dd>0)&&(dd<32)));
+t_applicant.set_dob_d(dd);
+do{
+cout<<"MONTH (e.g., 1, 2, 3, 4, ....11, 12 )"<<endl;
+cin>>dm;
+}
+while(!((dm>0)&&(dm<13)));
+t_applicant.set_dob_m(dm);
+do{
+cout<<"YEAR (e.g., 1901, ...2015, 2016 )"<<endl;
+cin>>dy;
+}
+while(!((dy>1900)&&(dy<3000)));
+t_applicant.set_dob_y(dy);
+calc_no_of_applicants();
+t_applicant.set_applicant_no(no_of_applicants+1);
+fout.write((char*)&t_applicant, sizeof(t_applicant));
+fout.close();
+calc_no_of_applicants();
+
+cout<<"********************************************************************************"<<endl;
+cout<<"                                ::YOUR DETAILS::                                "<<endl;
+cout<<"********************************************************************************"<<endl;
+cout<<"FORM SUCCESSFULLY SUBMITTED!"<<endl;
+cout<<"APPLICANT NUMBER:"<<t_applicant.get_applicant_no()<<endl;
+cout<<"APPLICANT'S NAME:";
+t_applicant.get_name();
+  cout<<endl;
+cout<<"FIRST NAME:";
+t_applicant.get_faname();
+  cout<<endl;
+cout<<"LAST NAME:";
+t_applicant.get_maname();
+  cout<<endl;
+cout<<"DATE OF BIRTH:"<<t_applicant.get_dob_d()<<"-"<<t_applicant.get_dob_m()<<"-"<<t_applicant.get_dob_y()<<endl;
+cout<<"********************************************************************************"<<endl;
+cout<<"PRESS ANY KEY TO RETURN TO THE MAIN MENU";
+getch();
+main();
+}
+
 void calc_no_of_applicants(
 
                            //Define this function
