@@ -1,35 +1,26 @@
 #include <iostream>
 #include <string.h>
-#include <graphics.h>
 
 //Hello Gupta :)
 using namespace std;
 
 int i;
-const char courses[6][6] = {'english','maths','physics','chemistry','HSS','CSE','Electrical','Mechanical'}
-char *student
+const char courses[6][6] = {'english','maths','physics','chemistry','HSS','CSE','Electrical','Mechanical'};
 
 class Index{
 
 public:
         void mainPage();
         void welcome(char *text);
-        hi shreya
 
 };
 
 void homePageText()
 {
 
-    cout<<"Online Test Examination"<<endl<<"Created By"<<endl<<"B16CS025 -- Shreya Patel && B16CS030 -- Saksham Gupta"<<end;
+    cout<<"Online Test Examination"<<endl<<"Created By"<<endl<<"B16CS025 -- Shreya Patel && B16CS030 -- Saksham Gupta"<<endl;
 }
 
-void Index2::mainPage()
-{
-    textbackground(GREEN);
-    textcolor(RED);
-
-}
 
 class user{
 private:
@@ -43,7 +34,7 @@ public:
     void register1(){ };
 };
 
-class student :: user {
+class Student : public user {
 private:
     struct appearedTest;
 public:
@@ -54,7 +45,7 @@ public:
 
 };
 
-class Professor :: user {
+class Professor : public user {
 private:
     int courseID;
 public:
@@ -92,69 +83,27 @@ public:
     void printQues(){};
     int getCorrectAns(){};
     int getQuesType(){};
-}
+};
 
 class DatabaseManager{
-public:
-    struct getDetails(int){};
-    struct getReport(int){};
-    int getProfCourseId(int){};
-    bool validate(int){};
-    bool validate (int,string){};
-    void updateMarks(int,int,int){};
-    bool addStudent(Student){};
-
-
-
-
-class person{
-    protected:
-    string name;
-    int user_ID;
-    int phone;
-    string password;
-    string Email_id;
-    string first_name;
-    string last_name;
-};
-
-class student :: person{
 
 public:
-
-
-
-};
-
-
-
-
-class Quiz{
-    public:
-
-    void Edit();
-    void duration();
-    void No_of_questions();
-    void marks();
-    void test_id();
-    int display_result(char filename[10], int, int);
-    int edit_result(char filename[10], int);
-    int question_number;
-    int valid;
+    //struct getDetails(int){};;
+    //struct getReport(int){};;
+    int getProfCourseId(int);
+    bool validate(int);
+    bool validate (int,string);
+    void updateMarks(int,int,int);
+    bool addStudent(Student);
 
 
 };
 
-void Quiz :: display_result (char filename[10], int student_ID, int course_ID )
-{
-    fstream file;
-    file.open(filename, ios::in);
-    file.seekg(0, ios::beg);
-    while(file.read())
-    {
 
-    }
-}
+
+
+
+
 
 
 
