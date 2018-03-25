@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string.h>
-#include <graphics.h>
 
 //Hello Gupta :)
 using namespace std;
 
+<<<<<<< HEAD
 int i;
 const char courses[6][6] = {'english','maths','physics','chemistry','HSS','CSE','Electrical','Mechanical'}
 char *student
@@ -174,6 +174,8 @@ int Question :: getQuesType()
     return type;
 }
 
+=======
+>>>>>>> c9eb6cae575e52764313f35416cd6de70f38b9bc
 int main()
 {
     cout << "Hello world!" << endl;
