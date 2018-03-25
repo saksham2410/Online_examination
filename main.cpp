@@ -9,12 +9,29 @@ int i;
 const char courses[6][6] = {'english','maths','physics','chemistry','HSS','CSE','Electrical','Mechanical'}
 char *student
 
+class DatabaseManager{
+public:
+    struct getDetails(int);
+    struct getReport(int);
+    int getProfCourseId(int);
+    bool validate(int);
+    bool validate (int,string);
+    void updateMarks(int,int,int);
+    bool addStudent(Student);
+    test generateTest(int);
+    question getQues(int);
+    dispAllQues(int);
+    bool addQues(question);
+    bool editQues(question);
+};
+
+DatabaseManager db;
+
 class Index{
 
 public:
         void mainPage();
         void welcome(char *text);
-        hi shreya
 
 };
 
@@ -33,42 +50,88 @@ void Index2::mainPage()
 
 class user{
 private:
-    string UserId;
+    int UserId;
     string Password;
     string FirstName;
     string LastName;
 public:
-    void login(){};
-    void viewProfile(){};
-    void register1(){ };
+    void login();
+    void viewProfile();
+    void register();
 };
+
+void user :: login ()
+{
+    int _id;
+    string _pwd;
+    int c=0;
+    retry: cout<<"\nEnter UserId : ";
+    cin>>_id;
+    cout<<"\nEnter Password : ";
+    cin>>_pwd;
+    if(validate(_id,_pwd))
+    {
+
+        if(student)
+        {
+            student S;
+            S.studentMenu();
+        }
+        if(professor)
+        {
+            professor P;
+            P.professorMenu();
+        }
+
+    }
+    else{
+        c++;
+        if(c<3)
+        {
+          cout<<"\n Incorrect credentials \n Please try again";
+          goto  retry;
+        }
+        cout<<"Three incorrect attempts\n";
+        cover();
+    }
+}
+
+void user:: viewProfile()
+{
+
+}
 
 class student :: user {
 private:
     struct appearedTest;
 public:
-    int getUserId(){};
-    void attemptTest(){};
-    void getReport(){};
-    void studentMenu(){};
-
+    int getUserId();
+    void attemptTest();
+    void getReport();
+    void studentMenu();
 };
+
+int student :: getUserId()
+{
+    return UserId;
+}
 
 class Professor :: user {
 private:
     int courseID;
 public:
-    int getCourse(){};
-    void addQuestion(){};
-    void editQuestion(){};
-    void viewQuestion(){};
-    void professorMenu(){};
-    void getReport(){};
+    int getCourse();
+    void addQuestion();
+    void editQuestion();
+    void viewQuestion();
+    void professorMenu();
+    void getReport();
 };
 
 class Test{
 private:
     int testID;
+    question testQuestions[];
     double marks;
 public:
     void setTime(){};
@@ -86,78 +149,30 @@ private:
     string choice3;
     string choice4;
     int correctAns;
-    double Posmarks;
-    double Negmarks;
+    double PosMarks;
+    double NegMarks;
 public:
-    void printQues(){};
-    int getCorrectAns(){};
-    int getQuesType(){};
-}
-
-class DatabaseManager{
-public:
-    struct getDetails(int){};
-    struct getReport(int){};
-    int getProfCourseId(int){};
-    bool validate(int){};
-    bool validate (int,string){};
-    void updateMarks(int,int,int){};
-    bool addStudent(Student){};
-
-
-
-
-class person{
-    protected:
-    string name;
-    int user_ID;
-    int phone;
-    string password;
-    string Email_id;
-    string first_name;
-    string last_name;
+    void printQues();
+    int getCorrectAns();
+    int getQuesType();
 };
 
-class student :: person{
-
-public:
-
-
-
-};
-
-
-
-
-class Quiz{
-    public:
-
-    void Edit();
-    void duration();
-    void No_of_questions();
-    void marks();
-    void test_id();
-    int display_result(char filename[10], int, int);
-    int edit_result(char filename[10], int);
-    int question_number;
-    int valid;
-
-
-};
-
-void Quiz :: display_result (char filename[10], int student_ID, int course_ID )
+void Question :: printQues()
 {
-    fstream file;
-    file.open(filename, ios::in);
-    file.seekg(0, ios::beg);
-    while(file.read())
-    {
-
-    }
+    cout<<question<<endl;
+    cout<<"1. "<<choice1<<endl;
+    cout<<"2. "<<choice2<<endl;
+    cout<<"3. "<<choice3<<endl;
+    cout<<"4. "<<choice4<<endl;
 }
-
-
-
+int Question :: getCorrectAns()
+{
+    return correctAns;
+}
+int Question :: getQuesType()
+{
+    return type;
+}
 
 int main()
 {
