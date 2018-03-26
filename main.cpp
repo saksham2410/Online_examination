@@ -4,7 +4,6 @@
 //Hello Gupta :)
 using namespace std;
 
-<<<<<<< HEAD
 int i;
 //const char courses[4][2] = {'english','maths','physics','chemistry'};
 char *student
@@ -24,20 +23,16 @@ public:
     bool addQues(question);
     bool editQues(question);
 };
-
 DatabaseManager db;
-
+/*
 class Index{
-
 public:
         void mainPage();
         void welcome(char *text);
-
 };
 
 void homePageText()
 {
-
     cout<<"Online Test Examination"<<endl<<"Created By"<<endl<<"B16CS025 -- Shreya Patel && B16CS030 -- Saksham Gupta"<<end;
 }
 
@@ -45,9 +40,8 @@ void Index2::mainPage()
 {
     textbackground(GREEN);
     textcolor(RED);
-
 }
-
+*/
 class user{
 private:
     int UserId;
@@ -65,6 +59,7 @@ void user :: login ()
     int _id;
     string _pwd;
     int c=0;
+
     retry: cout<<"\nEnter UserId : ";
     cin>>_id;
     cout<<"\nEnter Password : ";
@@ -97,6 +92,24 @@ void user :: login ()
 void user:: viewProfile()
 {
 
+}
+
+void user :: register()
+{
+    string f_name,l_name,pwd;
+    cout<<"\nENTER FIRSTNAME : ";
+    cin>>f_name;
+    cout<<"\nENTER LASTNAME : ";
+    cin>>l_name;
+    cout<<"\nENTER PASSWORD : ";
+    cin>>pwd;
+    student S(f_name,l_name,pwd);
+    if(db.addStudent(S))
+    {
+     cout<<"SUCCESSFUL REGISTRATION";
+     cout<<"YOUR USERID IS "<<S.getUserId()<<endl;
+    }
+    S.studentMenu();
 }
 
 class student :: user {
@@ -172,10 +185,11 @@ int Question :: getQuesType()
     return type;
 }
 
-=======
->>>>>>> c9eb6cae575e52764313f35416cd6de70f38b9bc
+/***********************************************************************************/
+
 int main()
 {
     cout << "Hello world!" << endl;
     return 0;
 }
+
