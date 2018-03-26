@@ -6,7 +6,7 @@ using namespace std;
 
 <<<<<<< HEAD
 int i;
-const char courses[6][6] = {'english','maths','physics','chemistry','HSS','CSE','Electrical','Mechanical'}
+//const char courses[4][2] = {'english','maths','physics','chemistry'};
 char *student
 
 class DatabaseManager{
@@ -71,7 +71,6 @@ void user :: login ()
     cin>>_pwd;
     if(validate(_id,_pwd))
     {
-
         if(student)
         {
             student S;
@@ -82,7 +81,6 @@ void user :: login ()
             professor P;
             P.professorMenu();
         }
-
     }
     else{
         c++;
