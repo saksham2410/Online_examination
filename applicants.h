@@ -3,6 +3,7 @@
 
 class Students {
 int applicant_no;
+
 char name[50];
 char first_name[50];
 char last_name[50];
@@ -10,7 +11,7 @@ int dob_day;
 int dob_mon;
 int dob_year;
 int marks;
-int rank;
+
 public:
     int get_applicant_no(){return applicant_no;}
     int get_dob_d(){return dob_day;}
