@@ -1,7 +1,7 @@
 #ifndef datamanager.h
 #define datamanager.h
-void admin_login(){
 
+void admin_login(){
 cout<<"********************************************************************************"<<endl;
   cout<<"                                ::ADMIN LOGIN::                                 "<<endl;
   cout<<"********************************************************************************"<<endl;

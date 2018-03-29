@@ -2,7 +2,6 @@
 #define applicants.h
 
 class Students {
-int applicant_no;
 
 char name[50];
 char first_name[50];
