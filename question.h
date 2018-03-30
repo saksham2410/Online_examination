@@ -33,8 +33,12 @@ public:
         cout<<"3. "<<choice3<<endl;
         cout<<"4. "<<choice4<<endl;
     }
-    int getCorrectAns(){return correctAns;}
-    int getQuestionType(){return type;}
+    int getCorrectAns(){
+        return correctAns;
+    }
+    int getQuestionType(){
+        return type;
+    }
 };
 
 #endif // QUESTION_H_INCLUDED
