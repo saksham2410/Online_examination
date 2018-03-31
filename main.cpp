@@ -1,7 +1,5 @@
 #include <iostream>
 #include <string.h>
-
-//Hello Gupta :)
 using namespace std;
 /*
 class Index{
@@ -23,7 +21,7 @@ void Index2::mainPage()
 */
 
 //const char courses[4][2] = {'english','maths','physics','chemistry'};
-int i;
+static int user_count=0;
 
 class DatabaseManager{
 public:
@@ -32,7 +30,7 @@ public:
     int getProfCourseId(int);
     bool validate(int);
     bool validate (int,string);
-    void updateMarks(int,int,int);
+    void updateMarks(int,int,double);
     bool addStudent(Student);
     test generateTest(int);
     question getQues(int);
@@ -61,8 +59,16 @@ void user :: login ()
     string _pwd;
     int c=0;
 
-    retry: cout<<"\nEnter UserId : ";
+    retry: cout<<"\nEnter UserId : ";                   //what if input fails
     cin>>_id;
+    /*if(cin.fail())
+    {
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout<<"Sorry you have entered invalid userId\n\n";
+        cout<<"Please
+    }
+    */
     cout<<"\nEnter Password : ";
     cin>>_pwd;
     if(validate(_id,_pwd))
@@ -82,7 +88,7 @@ void user :: login ()
         c++;
         if(c<3)
         {
-          cout<<"\n Incorrect credentials \n Please try again";
+          cout<<"\n\n Incorrect credentials \n Please try again\n\n";
           goto  retry;
         }
         cout<<"Three incorrect attempts\n";
@@ -95,6 +101,7 @@ void user:: viewProfile()
     cout<<"USERID     : "<<UserId<<endl;
     cout<<"FIRST_NAME : "<<FirstName<<endl;
     cout<<"LAST_NAME  : "<<LastName<<endl;
+    //cout<<"\n\nPress any key to go back :";
 }
 
 void user :: register()
@@ -109,9 +116,9 @@ void user :: register()
     student S(f_name,l_name,pwd);
     if(db.addStudent(S))
     {
-     cout<<"SUCCESSFUL REGISTRATION";
-     cout<<"YOUR USERID IS "<<S.getUserId()<<endl;
-     S.studentMenu();
+         cout<<"SUCCESSFUL REGISTRATION";
+         cout<<"YOUR USERID IS "<<S.getUserId()<<endl;
+         S.studentMenu();
     }
     else
     {
@@ -126,20 +133,25 @@ struct appearedTest
     vector <int> marks;
     //vector <int> score_rate;
 };
-class student :: user {
+
+class student :: public user {
 private:
     appearedTest T;
 public:
-    int getUserId();
+    student(string f_name,string l_name,string pwd)
+    {
+        FirstName = f_name;
+        LastName = l_name;
+        Password = pwd;
+        UserId = user_count;
+        user_count++;
+        //initialize T
+    }
+    int getUserId(){return UserId}
     void attemptTest();
     void getReport();
     void studentMenu();
 };
-
-int student :: getUserId()
-{
-    return UserId;
-}
 
 void student :: attemptTest()
 {
@@ -151,21 +163,54 @@ void student :: attemptTest()
     cout<<"\nEnter the course number : ";
     int n;
     cin>>n;
+    if(cin.fail()){
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout<<"Sorry you have entered invalid course number\n\n";
+        studentMenu();
+    }
     if(n<1 || n>4)
     {
         cout<<"Please enter a valid course number (between 1-4) :";
         cin>>n;
         if(cin.fail()){
             cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cout<<"Sorry you have entered invalid course number\n\n";
             studentMenu();
         }
     }
-    if(cin.fail()){
-        cin.clear();
-        cout<<"Sorry you have entered invalid course number\n\n";
-        studentMenu();
+    Test T
+    T=db.generateTest(n);
+    int testId = T.getTestId();
+    cout<<"TEST INSTRUCTIONS\n\n";          //yet to be written
+    int answer=0;
+    double score=0;
+    int c=0;
+    for(int i=0;i<T.testQuestions.size();i++)
+    {
+        T.testQuestion[i].printQues();
+        cout<<"ENTER YOUR ANSWER : ";
+        cin>>answer;
+        if(!cin.fail() && answer>0 && answer<5){
+            if(answer==testQuestion[i].getCorrectAns()){
+                    score=score+getPosMarks();
+                    c++;
+            }
+            else
+                score=score-getNegMarks();
+        }
+        else{
+            score=score-getNegMarks();
+        }
     }
+    cout<<"\n\nTEST ATTEMPTED SUCCESSFULLY";
+    cout<<"\n\nTOTAL SCORE         : "<<score;
+    cout<<"\nTOTAL CORRECT ANSWERS : "<<c;
+    //cout<<"\nPERFORMANCE           : ";
+    db.updateMarks(userId,testId,score);
+    cout<<"\n\n\n\n\n";
+    studentMenu();
 }
 void student :: getReport()
 {
@@ -188,19 +233,170 @@ void student :: getReport()
 
     //overall performance       extra h agr add karna ho to
 }
+void student :: studentMenu()
+{
+    cout<<"1. ATTEMPT TEST\n";
+    cout<<"2. GET REPORT\n";
+    cout<<"3. LOGOUT\n";
+    int n;
+    cout<<"\nEnter your choice : ";
+    cin>>n;
+    cin.ignore();
+    clrscr();
+    switch(n)
+    {
+    case 1:
+        attemptTest();
+    case 2:
+        getReport();
+    case 3:
+        cover();
+    }
+}
 
-class Professor :: user {
+class Professor :: public user {
 private:
     int courseID;
 public:
-    int getCourse();
+    int getCourse(){return courseID;}
+    void viewQuestion();
     void addQuestion();
     void editQuestion();
-    void viewQuestion();
     void professorMenu();
     void getReport();
 };
 
+
+void Professor :: viewQuestion()
+{
+    db.dispAllQues(courseID);
+}
+
+void Professor :: addQuestion()
+{
+    string Q, c1,c2,c3,c4;
+    int A;
+    double p,n;
+
+    cout<<"\n\nEnter the question to be added : ";
+    cin>>Q;
+    cout<<"\nEnter Choice 1 : ";
+    cin>>c1;
+    cout<<"\nEnter Choice 2 : ";
+    cin>>c2;
+    cout<<"\nEnter Choice 3 : ";
+    cin>>c3;
+    cout<<"\nEnter Choice 4 : ";
+    cin>>c4;
+    cout<<"\n\nEnter Correct Choice out of 1,2,3,4 : ";
+    cin>>A;
+    cout<<"\n\nEnter the positive marks for the question : ";
+    cin>>p;
+    cout<<"\n\nEnter the negative marks for the question : ";
+    cin>>n;
+    Question Ques(courseID,Q,c1,c2,c3,c4,A,p,n);
+    if(db.addQues(Ques))
+    {
+        clrscr();
+        cout<<"\n\n\nQUESTION ADDED SUCCESSFULLY\n\n";
+        professorMenu();
+    }
+    else{
+        clrscr();
+        cout<<"\n\n\nERROR WHILE ADDING QUESTION\n\n\n";
+        professorMenu();
+    }
+}
+void Professor :: editQuestion()
+{
+    viewQuestion();
+    int no;
+    cout<<"\n\nENTER THE QUESTION NUMBER TO BE EDITED : ";
+    re-enter: cin>>no;
+    if(no is present)                                           //a function to check whether question exists in the database
+    {
+        string Q, c1,c2,c3,c4;
+        int A;
+        double p,n;
+
+        cout<<"\n\nEnter the question to be edited : ";
+        cin>>Q;
+        cout<<"\nEnter Choice 1 : ";
+        cin>>c1;
+        cout<<"\nEnter Choice 2 : ";
+        cin>>c2;
+        cout<<"\nEnter Choice 3 : ";
+        cin>>c3;
+        cout<<"\nEnter Choice 4 : ";
+        cin>>c4;
+        cout<<"\n\nEnter Correct Choice out of 1,2,3,4 : ";
+        cin>>A;
+        cout<<"\n\nEnter the positive marks for the question : ";
+        cin>>p;
+        cout<<"\n\nEnter the negative marks for the question : ";
+        cin>>n;
+        Question Ques(courseID,Q,c1,c2,c3,c4,A,p,n);
+        if(db.editQues(Ques,no))
+        {
+            clrscr();
+            cout<<"\n\n\nQUESTION EDITED SUCCESSFULLY\n\n";
+            professorMenu();
+        }
+        else{
+            clrscr();
+            cout<<"\n\n\nERROR WHILE EDITING QUESTION\n\n\n";
+            professorMenu();
+        }
+
+    }
+    else{
+        cout<<"\n\nYOU HAVE ENTERED AN INVALID QUESTION NUMBER";
+        cout<<"\n\nRE-ENTER THE QUESTION NUMBER TO BE EDITED : ";
+        goto re-enter;
+    }
+}
+void Professor :: professorMenu()
+{
+    cout<<"\n\n\n\n";
+    cout<<"1. VIEW PROFILE\n";
+    cout<<"2. VIEW QUESTIONS\n";
+    cout<<"3. ADD QUESTION\n";
+    cout<<"4. EDIT QUESTION\n";
+    cout<<"5. GET REPORT\n";
+    cout<<"6. LOGOUT\n";
+    int n;
+    cout<<"\nEnter your choice : ";
+    cin>>n;
+    cin.ignore();
+    clrscr();
+    switch(n)
+    {
+    case 1:
+        viewProfile();
+        break;
+    case 2:
+        viewQuestion();
+        break;
+    case 3:
+        addQuestion();
+        break;
+    case 4:
+        editQuestion();
+        break;
+    case 5:
+        getReport();
+        break;
+    case 6:
+        cover();
+        break;
+    default:
+        break;
+    }
+}
+void Professor :: getReport()
+{
+    //to be defined
+}
 class Test{
     int testID;
     double marks;
